@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Rambo</string>
+    <string name="clear"><u>clear queue</u></string>
+</resources>

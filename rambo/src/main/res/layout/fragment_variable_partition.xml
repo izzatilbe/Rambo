@@ -1,0 +1,318 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8sp"
+    tools:context="tilbe.ibay.estrada.rambo.FixedPartitionFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="8sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Memory Available"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                <EditText
+                    android:id="@+id/memory_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:ems="10"
+                    android:hint="enter memory available"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="8sp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Compaction:"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                <RadioGroup
+                    android:id="@+id/rb_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checkedButton="@+id/with_rb"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/with_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="With" />
+
+                    <RadioButton
+                        android:id="@+id/without_rb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Without" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:text="Job Table"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                <TableLayout
+                    android:id="@+id/TableLayout02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:background="@drawable/border"
+                    android:clickable="false"
+                    android:gravity="center">
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:layout_width="50sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/border"
+                            android:padding="8sp"
+                            android:text="Job"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="75sp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:background="@drawable/border"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:hint="enter partition size"
+                            android:inputType="number"
+                            android:padding="8sp"
+                            android:singleLine="true"
+                            android:text="Memory"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="100sp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:background="@drawable/border"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:hint="enter partition size"
+                            android:inputType="number"
+                            android:padding="8sp"
+                            android:singleLine="true"
+                            android:text="Arrival Time"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="75sp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:background="@drawable/border"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:hint="enter partition size"
+                            android:inputType="number"
+                            android:padding="8sp"
+                            android:singleLine="true"
+                            android:text="Run Time"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textStyle="bold" />
+
+                    </TableRow>
+
+                </TableLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/minus_2"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/negative"
+                        android:elevation="3dp" />
+
+                    <Button
+                        android:id="@+id/plus_2"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/plus"
+                        android:elevation="3dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/variable_btn"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="16sp"
+                android:background="@drawable/rounded_button"
+                android:text="Start Allocation"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/variable_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="18sp" />
+
+            <TableLayout
+                android:id="@+id/TableLayout03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center"
+                android:background="@drawable/border"
+                android:clickable="false"
+                android:gravity="center"
+                android:visibility="invisible">
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="50sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8sp"
+                        android:text="Job"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="75sp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        android:background="@drawable/border"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="enter partition size"
+                        android:inputType="number"
+                        android:padding="8sp"
+                        android:singleLine="true"
+                        android:text="Started"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="75sp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="enter partition size"
+                        android:inputType="number"
+                        android:padding="8sp"
+                        android:singleLine="true"
+                        android:text="Finished"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="100sp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="enter partition size"
+                        android:inputType="number"
+                        android:padding="8sp"
+                        android:singleLine="true"
+                        android:text="MAWJWA"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+            </TableLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

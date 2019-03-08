@@ -1,0 +1,228 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8sp"
+    tools:context="tilbe.ibay.estrada.rambo.FixedPartitionFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30sp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Algorithm:"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                    <RadioGroup
+                        android:id="@+id/rb_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:checkedButton="@+id/first_fit_rb"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/first_fit_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="First Fit" />
+
+                        <RadioButton
+                            android:id="@+id/best_fit_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Best Fit" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="left|center"
+                            android:text="Add job to queue"
+                            android:textAlignment="textStart"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                        <EditText
+                            android:id="@+id/job_size_et"
+                            android:layout_width="185dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8sp"
+                            android:layout_marginRight="8sp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="job size of new job"
+                            android:inputType="number"
+                            android:textAlignment="center" />
+
+                        <Button
+                            android:id="@+id/addjob"
+                            android:layout_width="30sp"
+                            android:layout_height="30sp"
+                            android:layout_weight="0"
+                            android:background="@drawable/checked"
+                            android:textAllCaps="false" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/job_queue_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Job Queue: empty"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <TextView
+                        android:id="@+id/clear_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:gravity="right"
+                        android:text="@string/clear"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textColor="@color/colorPrimaryDark" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10sp"
+                        android:text="Partition Allocation Scheme"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                    <TableLayout
+                        android:id="@+id/TableLayout01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|center"
+                        android:background="@drawable/border"
+                        android:clickable="false"
+                        android:gravity="center">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="100sp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/border"
+                                android:padding="8sp"
+                                android:text="Partition"
+                                android:textAlignment="center"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                            <TextView
+                                android:layout_width="120sp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="2"
+                                android:background="@drawable/border"
+                                android:ems="10"
+                                android:gravity="center"
+                                android:singleLine="true"
+                                android:text="Memory"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/minus"
+                            android:layout_width="30sp"
+                            android:layout_height="30sp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/negative"
+                            android:elevation="3dp" />
+
+                        <Button
+                            android:id="@+id/plus"
+                            android:layout_width="30sp"
+                            android:layout_height="30sp"
+                            android:layout_weight="1"
+                            android:background="@drawable/plus"
+                            android:elevation="3dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            <Button
+                android:id="@+id/fixed_btn"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="16sp"
+                android:background="@drawable/rounded_button"
+                android:text="Start Allocation"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/fixed_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>
