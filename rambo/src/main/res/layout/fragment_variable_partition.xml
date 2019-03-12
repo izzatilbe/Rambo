@@ -291,6 +291,23 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:layout_width="75sp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="enter partition size"
+                        android:inputType="number"
+                        android:padding="8sp"
+                        android:singleLine="true"
+                        android:text="Wait Time"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textStyle="bold" />
+
+                    <TextView
                         android:layout_width="100sp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"

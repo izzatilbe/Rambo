@@ -239,7 +239,7 @@ public class VariablePartitionFragment extends Fragment {
     }
 
     void withoutCompaction(){
-        Memory memory = new Memory(200, "without");
+        Memory memory = new Memory(Integer.valueOf(memoryEt.getText().toString()), "without");
         LocalTime currentTime = jobList.get(0).getArrivalTime();
 
         while (jobsDone < jobList.size()) {
@@ -292,7 +292,7 @@ public class VariablePartitionFragment extends Fragment {
     }
 
     void withCompaction(){
-        Memory memory = new Memory(200, "with");
+        Memory memory = new Memory(Integer.valueOf(memoryEt.getText().toString()), "with");
         LocalTime currentTime = jobList.get(0).getArrivalTime();
         while (jobsDone < jobList.size()) {
 
@@ -383,6 +383,18 @@ public class VariablePartitionFragment extends Fragment {
                 spToPx(8, getContext()),
                 spToPx(8, getContext()));
 
+        TextView t5_h = new TextView(getContext());
+        t5_h.setText("Wait");
+        t5_h.setGravity(View.TEXT_ALIGNMENT_CENTER);
+        t5_h.setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Body1);
+        t5_h.setBackgroundResource(R.drawable.border);
+        t5_h.setLayoutParams(new TableRow.LayoutParams(spToPx(75, getContext()), TableRow.LayoutParams.WRAP_CONTENT));
+        t5_h.setGravity(Gravity.CENTER);
+        t5_h.setPadding(spToPx(8, getContext()),
+                spToPx(8, getContext()),
+                spToPx(8, getContext()),
+                spToPx(8, getContext()));
+
         TextView t4_h = new TextView(getContext());
         t4_h.setText("MAWJWA");
         t4_h.setGravity(View.TEXT_ALIGNMENT_CENTER);
@@ -398,6 +410,7 @@ public class VariablePartitionFragment extends Fragment {
         row_h.addView(t1_h);
         row_h.addView(t2_h);
         row_h.addView(t3_h);
+        row_h.addView(t5_h);
         row_h.addView(t4_h);
 
         table.addView(row_h, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
@@ -437,6 +450,17 @@ public class VariablePartitionFragment extends Fragment {
                     spToPx(8, getContext()),
                     spToPx(8, getContext()));
 
+            TextView t5 = new TextView(getContext());
+            t5.setText(String.valueOf(j.getWaitingTime()));
+            t5.setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Body1);
+            t5.setBackgroundResource(R.drawable.border);
+            t5.setLayoutParams(new TableRow.LayoutParams(spToPx(75, getContext()), TableRow.LayoutParams.WRAP_CONTENT));
+            t5.setGravity(Gravity.CENTER);
+            t5.setPadding(spToPx(8, getContext()),
+                    spToPx(8, getContext()),
+                    spToPx(8, getContext()),
+                    spToPx(8, getContext()));
+
             TextView t4 = new TextView(getContext());
             t4.setText(String.valueOf(j.getWhenAllocated()));
             t4.setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Body1);
@@ -451,6 +475,7 @@ public class VariablePartitionFragment extends Fragment {
             row.addView(t1);
             row.addView(t2);
             row.addView(t3);
+            row.addView(t5);
             row.addView(t4);
 
             table.addView(row, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));

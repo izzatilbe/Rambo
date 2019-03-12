@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>Job.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); font-style: italic; }
+.s3 { color: rgb(128,128,128); }
+.s4 { color: rgb(104,151,187); }
+.s5 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Job.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">tilbe.ibay.estrada.rambo</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * Created by IJTilbe on 08/03/2019. 
+ */</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.time.LocalTime</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">Job { 
+    </span><span class="s0">private int </span><span class="s1">jobNo</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private int </span><span class="s1">size</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">LocalTime arrivalTime</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private int </span><span class="s1">runTime</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">private </span><span class="s1">LocalTime timeStarted</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">LocalTime timeFinished</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private int </span><span class="s1">waitingTime</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">String status</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private int </span><span class="s1">whenAllocated</span><span class="s0">; </span><span class="s3">//memory available when job was allocated</span><span class="s1"> 
+ 
+    </span><span class="s0">public </span><span class="s1">Job(</span><span class="s0">int </span><span class="s1">jobNo</span><span class="s0">, int </span><span class="s1">size</span><span class="s0">, </span><span class="s1">LocalTime arrivalTime</span><span class="s0">, int </span><span class="s1">runTime) { 
+        </span><span class="s0">this</span><span class="s1">.jobNo = jobNo</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.size = size</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.arrivalTime = arrivalTime</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.runTime = runTime</span><span class="s0">;</span><span class="s1"> 
+        timeStarted = LocalTime.MIN</span><span class="s0">;</span><span class="s1"> 
+        timeFinished = LocalTime.MIN</span><span class="s0">;</span><span class="s1"> 
+        whenAllocated = </span><span class="s4">0</span><span class="s0">;</span><span class="s1"> 
+        status = </span><span class="s5">&quot;waiting&quot;</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">Job(Job job) { 
+        </span><span class="s0">this</span><span class="s1">.jobNo = job.getJobNo()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.size = job.getSize()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.arrivalTime = job.getArrivalTime()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.runTime = job.getRunTime()</span><span class="s0">;</span><span class="s1"> 
+        timeStarted = LocalTime.MIN</span><span class="s0">;</span><span class="s1"> 
+        timeFinished = LocalTime.MIN</span><span class="s0">;</span><span class="s1"> 
+        whenAllocated = </span><span class="s4">0</span><span class="s0">;</span><span class="s1"> 
+        status = </span><span class="s5">&quot;waiting&quot;</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public int </span><span class="s1">getJobNo() { 
+        </span><span class="s0">return </span><span class="s1">jobNo</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">LocalTime getArrivalTime() { 
+        </span><span class="s0">return </span><span class="s1">arrivalTime</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public int </span><span class="s1">getRunTime() { 
+        </span><span class="s0">return </span><span class="s1">runTime</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public int </span><span class="s1">getSize() { 
+        </span><span class="s0">return </span><span class="s1">size</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">LocalTime getTimeStarted() { 
+        </span><span class="s0">return </span><span class="s1">timeStarted</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setTimeStarted(LocalTime timeStarted) { 
+        </span><span class="s0">this</span><span class="s1">.timeStarted = timeStarted</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">LocalTime getTimeFinished() { 
+        </span><span class="s0">return </span><span class="s1">timeFinished</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setTimeFinished(LocalTime timeFinished) { 
+        </span><span class="s0">this</span><span class="s1">.timeFinished = timeFinished</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public int </span><span class="s1">getWaitingTime() { 
+        </span><span class="s0">return </span><span class="s1">waitingTime</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setWaitingTime(</span><span class="s0">int </span><span class="s1">waitingTime) { 
+        </span><span class="s0">this</span><span class="s1">.waitingTime = waitingTime</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String getStatus() { 
+        </span><span class="s0">return </span><span class="s1">status</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setStatus(String status) { 
+        </span><span class="s0">this</span><span class="s1">.status = status</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public int </span><span class="s1">getWhenAllocated() { 
+        </span><span class="s0">return </span><span class="s1">whenAllocated</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setWhenAllocated(</span><span class="s0">int </span><span class="s1">whenAllocated) { 
+        </span><span class="s0">this</span><span class="s1">.whenAllocated = whenAllocated</span><span class="s0">;</span><span class="s1"> 
+    } 
+} 
+</span></pre>
+</body>
+</html>

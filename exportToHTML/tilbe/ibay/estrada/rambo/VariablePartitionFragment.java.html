@@ -1,0 +1,512 @@
+<html>
+<head>
+<title>VariablePartitionFragment.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); font-style: italic; }
+.s3 { color: rgb(98,151,85); font-weight: bold; font-style: italic; }
+.s4 { color: rgb(128,128,128); }
+.s5 { color: rgb(104,151,187); }
+.s6 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+VariablePartitionFragment.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">tilbe.ibay.estrada.rambo</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">android.app.TimePickerDialog</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.Fragment</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.text.InputType</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.TypedValue</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.Gravity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.LayoutInflater</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.ViewGroup</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.RadioButton</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TableLayout</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TableRow</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.ByteArrayInputStream</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.ByteArrayOutputStream</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.ObjectInputStream</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.io.ObjectOutputStream</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.time.LocalTime</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.Calendar</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.Stack</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * A simple {</span><span class="s3">@link </span><span class="s2">Fragment} subclass. 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">VariablePartitionFragment </span><span class="s0">extends </span><span class="s1">Fragment { 
+    Button addRow</span><span class="s0">;</span><span class="s1"> 
+    Button minusRow</span><span class="s0">;</span><span class="s1"> 
+    Button variableBtn</span><span class="s0">;</span><span class="s1"> 
+    RadioButton withRb</span><span class="s0">;</span><span class="s1"> 
+    EditText memoryEt</span><span class="s0">;</span><span class="s1"> 
+ 
+    Stack&lt;TableRow&gt; tableRowStack</span><span class="s0">;</span><span class="s1"> 
+    ArrayList&lt;EditText&gt; et_memoryList</span><span class="s0">;</span><span class="s1"> 
+    ArrayList&lt;EditText&gt; et_runTimeList</span><span class="s0">;</span><span class="s1"> 
+    ArrayList&lt;EditText&gt; et_arrivalTimeList</span><span class="s0">;</span><span class="s1"> 
+    ArrayList&lt;Job&gt; jobList_input</span><span class="s0">;</span><span class="s1"> 
+    ArrayList&lt;Job&gt; jobList</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">int </span><span class="s1">counter</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">jobsDone</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">public </span><span class="s1">VariablePartitionFragment() { 
+        </span><span class="s4">// Required empty public constructor</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public </span><span class="s1">View onCreateView(LayoutInflater inflater</span><span class="s0">, </span><span class="s1">ViewGroup container</span><span class="s0">,</span><span class="s1"> 
+                             Bundle savedInstanceState) { 
+ 
+        counter = </span><span class="s5">0</span><span class="s0">;</span><span class="s1"> 
+        View view = inflater.inflate(R.layout.fragment_variable_partition</span><span class="s0">, </span><span class="s1">container</span><span class="s0">, false</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+        tableRowStack = </span><span class="s0">new </span><span class="s1">Stack&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+        et_memoryList = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+        et_runTimeList = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+        et_arrivalTimeList = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+ 
+        addRow = view.findViewById(R.id.plus_2)</span><span class="s0">;</span><span class="s1"> 
+        minusRow = view.findViewById(R.id.minus_2)</span><span class="s0">;</span><span class="s1"> 
+        variableBtn = view.findViewById(R.id.variable_btn)</span><span class="s0">;</span><span class="s1"> 
+        withRb = view.findViewById(R.id.with_rb)</span><span class="s0">;</span><span class="s1"> 
+        memoryEt = view.findViewById(R.id.memory_et)</span><span class="s0">;</span><span class="s1"> 
+ 
+        addRow.setOnClickListener(v -&gt; { 
+            </span><span class="s4">// get a reference for the TableLayout</span><span class="s1"> 
+            TableLayout table = getView().findViewById(R.id.TableLayout02)</span><span class="s0">;</span><span class="s1"> 
+ 
+            TableRow row = </span><span class="s0">new </span><span class="s1">TableRow(getContext())</span><span class="s0">;</span><span class="s1"> 
+ 
+            counter++</span><span class="s0">;</span><span class="s1"> 
+ 
+            TextView t = </span><span class="s0">new </span><span class="s1">TextView(getContext())</span><span class="s0">;</span><span class="s1"> 
+            t.setText(String.valueOf(counter))</span><span class="s0">;</span><span class="s1"> 
+            t.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+            t.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">50</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.MATCH_PARENT))</span><span class="s0">;</span><span class="s1"> 
+            t.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+            t.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+            t.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+            EditText e = </span><span class="s0">new </span><span class="s1">EditText(getContext())</span><span class="s0">;</span><span class="s1"> 
+            e.setHint(</span><span class="s6">&quot;enter size&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            e.setInputType(InputType.TYPE_CLASS_NUMBER)</span><span class="s0">;</span><span class="s1"> 
+            e.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+            e.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+            e.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">75</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+            e.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+            e.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+            EditText e1 = </span><span class="s0">new </span><span class="s1">EditText(getContext())</span><span class="s0">;</span><span class="s1"> 
+            e1.setHint(</span><span class="s6">&quot;run time&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            e1.setInputType(InputType.TYPE_CLASS_NUMBER)</span><span class="s0">;</span><span class="s1"> 
+            e1.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+            e1.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+            e1.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">75</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+            e1.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+            e1.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+            EditText e2 = </span><span class="s0">new </span><span class="s1">EditText(getContext())</span><span class="s0">;</span><span class="s1"> 
+            e2.setHint(</span><span class="s6">&quot;arrival time&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            e2.setInputType(InputType.TYPE_NULL)</span><span class="s0">;</span><span class="s1"> 
+ 
+            e2.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+            e2.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+            e2.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">100</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+            e2.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+            e2.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+            e2.setOnFocusChangeListener(</span><span class="s0">new </span><span class="s1">View.OnFocusChangeListener() { 
+                @Override 
+                </span><span class="s0">public void </span><span class="s1">onFocusChange(View v</span><span class="s0">, boolean </span><span class="s1">hasFocus) { 
+                    </span><span class="s0">if</span><span class="s1">(hasFocus){ 
+                        Calendar mcurrentTime = Calendar.getInstance()</span><span class="s0">;</span><span class="s1"> 
+                        </span><span class="s0">int </span><span class="s1">hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)</span><span class="s0">;</span><span class="s1"> 
+                        </span><span class="s0">int </span><span class="s1">minute = mcurrentTime.get(Calendar.MINUTE)</span><span class="s0">;</span><span class="s1"> 
+                        TimePickerDialog mTimePicker</span><span class="s0">;</span><span class="s1"> 
+                        mTimePicker = </span><span class="s0">new </span><span class="s1">TimePickerDialog(getContext()</span><span class="s0">, </span><span class="s1">(timePicker</span><span class="s0">, </span><span class="s1">selectedHour</span><span class="s0">, </span><span class="s1">selectedMinute) -&gt; { 
+                            String time = String.format(</span><span class="s6">&quot;%02d:%02d&quot;</span><span class="s0">, </span><span class="s1">selectedHour</span><span class="s0">, </span><span class="s1">selectedMinute)</span><span class="s0">;</span><span class="s1"> 
+                            e2.setText(time)</span><span class="s0">;</span><span class="s1"> 
+ 
+                        }</span><span class="s0">, </span><span class="s1">hour</span><span class="s0">, </span><span class="s1">minute</span><span class="s0">, true</span><span class="s1">)</span><span class="s0">;</span><span class="s4">//Yes 24 hour time</span><span class="s1"> 
+                        mTimePicker.setTitle(</span><span class="s6">&quot;Select Time&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        mTimePicker.show()</span><span class="s0">;</span><span class="s1"> 
+                    } 
+                } 
+            })</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+            row.addView(t)</span><span class="s0">;</span><span class="s1"> 
+            row.addView(e)</span><span class="s0">;</span><span class="s1"> 
+            row.addView(e2)</span><span class="s0">;</span><span class="s1"> 
+            row.addView(e1)</span><span class="s0">;</span><span class="s1"> 
+ 
+            tableRowStack.push(row)</span><span class="s0">;</span><span class="s1"> 
+            et_memoryList.add(e)</span><span class="s0">;</span><span class="s1"> 
+            et_runTimeList.add(e1)</span><span class="s0">;</span><span class="s1"> 
+            et_arrivalTimeList.add(e2)</span><span class="s0">;</span><span class="s1"> 
+ 
+            table.addView(row</span><span class="s0">,new </span><span class="s1">TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT</span><span class="s0">, </span><span class="s1">TableLayout.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+            e.requestFocus()</span><span class="s0">;</span><span class="s1"> 
+        })</span><span class="s0">;</span><span class="s1"> 
+ 
+        minusRow.setOnClickListener(v -&gt; { 
+            </span><span class="s0">if </span><span class="s1">(counter &gt; </span><span class="s5">0</span><span class="s1">) { 
+                TableLayout table = getView().findViewById(R.id.TableLayout02)</span><span class="s0">;</span><span class="s1"> 
+                TableRow row = tableRowStack.peek()</span><span class="s0">;</span><span class="s1"> 
+                table.removeView(row)</span><span class="s0">;</span><span class="s1"> 
+                tableRowStack.pop()</span><span class="s0">;</span><span class="s1"> 
+                et_memoryList.remove(et_memoryList.size()-</span><span class="s5">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                et_runTimeList.remove(et_runTimeList.size()-</span><span class="s5">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                et_arrivalTimeList.remove(et_arrivalTimeList.size()-</span><span class="s5">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                counter--</span><span class="s0">;</span><span class="s1"> 
+            } </span><span class="s0">else</span><span class="s1">{ 
+                Toast.makeText(getContext()</span><span class="s0">,</span><span class="s6">&quot;No rows left&quot;</span><span class="s0">,</span><span class="s1"> 
+                        Toast.LENGTH_SHORT).show()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+ 
+        variableBtn.setOnClickListener(v -&gt; { 
+            jobsDone = </span><span class="s5">0</span><span class="s0">;</span><span class="s1"> 
+            jobList_input = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span><span class="s1"> 
+            jobList = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;(jobList_input.size())</span><span class="s0">;</span><span class="s1"> 
+ 
+            jobList_input.clear()</span><span class="s0">;</span><span class="s1"> 
+            jobList.clear()</span><span class="s0">;</span><span class="s1"> 
+ 
+            TableLayout table = getView().findViewById(R.id.TableLayout03)</span><span class="s0">;</span><span class="s1"> 
+            table.removeAllViews()</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">if </span><span class="s1">(checkInputValidity()) { 
+                </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s0">; </span><span class="s1">i &lt; tableRowStack.size()</span><span class="s0">; </span><span class="s1">i++) { 
+                    jobList_input.add(</span><span class="s0">new <a href="Job.java.html">Job</a></span><span class="s1">( 
+                            i + </span><span class="s5">1</span><span class="s0">,</span><span class="s1"> 
+                            Integer.parseInt(et_memoryList.get(i).getText().toString())</span><span class="s0">,</span><span class="s1"> 
+                            LocalTime.parse(et_arrivalTimeList.get(i).getText().toString())</span><span class="s0">,</span><span class="s1"> 
+                            Integer.parseInt(et_runTimeList.get(i).getText().toString()) 
+                    ))</span><span class="s0">;</span><span class="s1"> 
+                } 
+ 
+                </span><span class="s4">//deep clone of job input</span><span class="s1"> 
+                </span><span class="s0">for </span><span class="s1">(<a href="Job.java.html">Job</a> j : jobList_input) { 
+                    jobList.add(</span><span class="s0">new <a href="Job.java.html">Job</a></span><span class="s1">(j))</span><span class="s0">;</span><span class="s1"> 
+                } 
+ 
+                jobList = <a href="JobUtil.java.html">JobUtil</a>.sort(jobList)</span><span class="s0">;</span><span class="s1"> 
+ 
+                System.out.println(</span><span class="s6">&quot;----------joblist------------&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s0">; </span><span class="s1">i &lt; jobList.size()</span><span class="s0">; </span><span class="s1">i++) { 
+                    <a href="Job.java.html">Job</a> j = jobList.get(i)</span><span class="s0">;</span><span class="s1"> 
+                    System.out.println(j.getJobNo() + </span><span class="s6">&quot; &quot; </span><span class="s1">+ String.valueOf(j.getSize()) + </span><span class="s6">&quot;K &quot; </span><span class="s1">+ String.valueOf(j.getArrivalTime()) 
+                            + </span><span class="s6">&quot; &quot; </span><span class="s1">+ String.valueOf(j.getRunTime()))</span><span class="s0">;</span><span class="s1"> 
+                } 
+ 
+                </span><span class="s0">if </span><span class="s1">(withRb.isChecked()) { 
+                    withCompaction()</span><span class="s0">;</span><span class="s1"> 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    withoutCompaction()</span><span class="s0">;</span><span class="s1"> 
+                } 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                Toast.makeText(getContext()</span><span class="s0">, </span><span class="s6">&quot;Invalid. Check job table.&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_LONG).show()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        })</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">return </span><span class="s1">view</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public static int </span><span class="s1">spToPx(</span><span class="s0">int </span><span class="s1">sp</span><span class="s0">, </span><span class="s1">Context context) { 
+        </span><span class="s0">return </span><span class="s1">(</span><span class="s0">int</span><span class="s1">) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP</span><span class="s0">, </span><span class="s1">sp</span><span class="s0">, </span><span class="s1">context.getResources().getDisplayMetrics())</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">boolean </span><span class="s1">checkInputValidity(){ 
+        </span><span class="s0">return </span><span class="s1">!(tableRowStack.isEmpty() || memoryEt.getText().toString().isEmpty())</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">int </span><span class="s1">getNumberJobsDone(ArrayList&lt;Job&gt; jobs){ 
+        </span><span class="s0">int </span><span class="s1">num = </span><span class="s5">0</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(<a href="Job.java.html">Job</a> j: jobs) { 
+            </span><span class="s0">if</span><span class="s1">(j.getStatus().equals(</span><span class="s6">&quot;done&quot;</span><span class="s1">)) num++</span><span class="s0">;</span><span class="s1"> 
+        } 
+        </span><span class="s0">return </span><span class="s1">num</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">void </span><span class="s1">withoutCompaction(){ 
+        <a href="Memory.java.html">Memory</a> memory = </span><span class="s0">new <a href="Memory.java.html">Memory</a></span><span class="s1">(Integer.valueOf(memoryEt.getText().toString())</span><span class="s0">, </span><span class="s6">&quot;without&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        LocalTime currentTime = jobList.get(</span><span class="s5">0</span><span class="s1">).getArrivalTime()</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">while </span><span class="s1">(jobsDone &lt; jobList.size()) { 
+ 
+            System.out.println(</span><span class="s6">&quot;Current time: &quot; </span><span class="s1">+ currentTime.toString())</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s0">; </span><span class="s1">i &lt; jobList.size()</span><span class="s0">; </span><span class="s1">i++) { 
+                <a href="Job.java.html">Job</a> job = jobList.get(i)</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s4">//free partition with finished jobs</span><span class="s1"> 
+                memory.updateJobWithout(currentTime)</span><span class="s0">;</span><span class="s1"> 
+                memory.mergeEmptyPartitions()</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s0">if</span><span class="s1">(job.getStatus().equals(</span><span class="s6">&quot;allocated&quot;</span><span class="s1">) || job.getStatus().equals(</span><span class="s6">&quot;done&quot;</span><span class="s1">)) </span><span class="s0">continue;</span><span class="s1"> 
+                </span><span class="s4">//check if job did not arrive yet</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(job.getArrivalTime().isAfter(currentTime)) { 
+                    System.out.println(</span><span class="s6">&quot;Job &quot; </span><span class="s1">+ job.getJobNo() + </span><span class="s6">&quot; has not arrived yet&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">break;</span><span class="s1"> 
+                } 
+                </span><span class="s0">else </span><span class="s1">{ 
+                    </span><span class="s0">boolean </span><span class="s1">allocated = </span><span class="s0">false;</span><span class="s1"> 
+ 
+                    </span><span class="s0">if</span><span class="s1">(!jobList.get(i).getStatus().equals(</span><span class="s6">&quot;done&quot;</span><span class="s1">)){ 
+                        job = memory.addPartitionWithout(job</span><span class="s0">, </span><span class="s1">currentTime)</span><span class="s0">;</span><span class="s1"> 
+                        jobList.set(i</span><span class="s0">, </span><span class="s1">job)</span><span class="s0">;</span><span class="s1"> 
+                        </span><span class="s0">if</span><span class="s1">(job.getStatus().equals(</span><span class="s6">&quot;allocated&quot;</span><span class="s1">)){ 
+                            allocated = </span><span class="s0">true;</span><span class="s1"> 
+                        } </span><span class="s0">else </span><span class="s1">{ 
+                            allocated = </span><span class="s0">false;</span><span class="s1"> 
+                        } 
+                    } 
+ 
+                    </span><span class="s0">if </span><span class="s1">(!allocated){ 
+                        System.out.println(</span><span class="s6">&quot;No partitions available. Waiting...&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        </span><span class="s0">break;</span><span class="s1"> 
+                    } 
+                } 
+ 
+            } 
+            currentTime = currentTime.plusMinutes(</span><span class="s5">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            jobsDone = getNumberJobsDone(jobList)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s0">; </span><span class="s1">i &lt; jobList.size()</span><span class="s0">; </span><span class="s1">i++) { 
+            <a href="Job.java.html">Job</a> j = jobList.get(i)</span><span class="s0">;</span><span class="s1"> 
+            System.out.println(j.getJobNo() + </span><span class="s6">&quot; &quot; </span><span class="s1">+ j.getTimeStarted().toString() + </span><span class="s6">&quot; &quot; </span><span class="s1">+ j.getTimeFinished().toString() 
+                    + </span><span class="s6">&quot; &quot; </span><span class="s1">+ j.getWaitingTime() + </span><span class="s6">&quot; &quot; </span><span class="s1">+ j.getWhenAllocated() + </span><span class="s6">&quot;K&quot; </span><span class="s1">+ </span><span class="s6">&quot; &quot; </span><span class="s1">+ j.getStatus())</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        showTable()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">void </span><span class="s1">withCompaction(){ 
+        <a href="Memory.java.html">Memory</a> memory = </span><span class="s0">new <a href="Memory.java.html">Memory</a></span><span class="s1">(Integer.valueOf(memoryEt.getText().toString())</span><span class="s0">, </span><span class="s6">&quot;with&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        LocalTime currentTime = jobList.get(</span><span class="s5">0</span><span class="s1">).getArrivalTime()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">while </span><span class="s1">(jobsDone &lt; jobList.size()) { 
+ 
+            System.out.println(</span><span class="s6">&quot;Current time: &quot; </span><span class="s1">+ currentTime.toString())</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s0">; </span><span class="s1">i &lt; jobList.size()</span><span class="s0">; </span><span class="s1">i++) { 
+                <a href="Job.java.html">Job</a> job = jobList.get(i)</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s4">//free partition with finished jobs</span><span class="s1"> 
+                memory.updateJobWith(currentTime)</span><span class="s0">;</span><span class="s1"> 
+ 
+                </span><span class="s0">if</span><span class="s1">(job.getStatus().equals(</span><span class="s6">&quot;allocated&quot;</span><span class="s1">) || job.getStatus().equals(</span><span class="s6">&quot;done&quot;</span><span class="s1">)) </span><span class="s0">continue;</span><span class="s1"> 
+                </span><span class="s4">//check if job did not arrive yet</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(job.getArrivalTime().isAfter(currentTime)) { 
+                    System.out.println(</span><span class="s6">&quot;Job &quot; </span><span class="s1">+ job.getJobNo() + </span><span class="s6">&quot; has not arrived yet&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">break;</span><span class="s1"> 
+                } 
+                </span><span class="s0">else </span><span class="s1">{ 
+                    </span><span class="s0">boolean </span><span class="s1">allocated = </span><span class="s0">false;</span><span class="s1"> 
+ 
+                    </span><span class="s0">if</span><span class="s1">(!jobList.get(i).getStatus().equals(</span><span class="s6">&quot;done&quot;</span><span class="s1">)){ 
+                        job = memory.addPartitionWith(job</span><span class="s0">, </span><span class="s1">currentTime)</span><span class="s0">;</span><span class="s1"> 
+                        jobList.set(i</span><span class="s0">, </span><span class="s1">job)</span><span class="s0">;</span><span class="s1"> 
+                        </span><span class="s0">if</span><span class="s1">(job.getStatus().equals(</span><span class="s6">&quot;allocated&quot;</span><span class="s1">)){ 
+                            allocated = </span><span class="s0">true;</span><span class="s1"> 
+                        } </span><span class="s0">else </span><span class="s1">{ 
+                            allocated = </span><span class="s0">false;</span><span class="s1"> 
+                        } 
+                    } 
+ 
+                    </span><span class="s0">if </span><span class="s1">(!allocated){ 
+                        System.out.println(</span><span class="s6">&quot;No partitions available. Waiting...&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        </span><span class="s0">break;</span><span class="s1"> 
+                    } 
+                } 
+ 
+            } 
+            currentTime = currentTime.plusMinutes(</span><span class="s5">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            jobsDone = getNumberJobsDone(jobList)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s0">; </span><span class="s1">i &lt; jobList.size()</span><span class="s0">; </span><span class="s1">i++) { 
+            <a href="Job.java.html">Job</a> j = jobList.get(i)</span><span class="s0">;</span><span class="s1"> 
+            System.out.println(j.getJobNo() + </span><span class="s6">&quot; &quot; </span><span class="s1">+ j.getTimeStarted().toString() + </span><span class="s6">&quot; &quot; </span><span class="s1">+ j.getTimeFinished().toString() 
+                    + </span><span class="s6">&quot; &quot; </span><span class="s1">+ j.getWaitingTime() + </span><span class="s6">&quot; &quot; </span><span class="s1">+ j.getWhenAllocated() + </span><span class="s6">&quot;K&quot; </span><span class="s1">+ </span><span class="s6">&quot; &quot; </span><span class="s1">+ j.getStatus())</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        showTable()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">void </span><span class="s1">showTable() { 
+        TableLayout table = getView().findViewById(R.id.TableLayout03)</span><span class="s0">;</span><span class="s1"> 
+ 
+        TableRow row_h = </span><span class="s0">new </span><span class="s1">TableRow(getContext())</span><span class="s0">;</span><span class="s1"> 
+ 
+        TextView t1_h = </span><span class="s0">new </span><span class="s1">TextView(getContext())</span><span class="s0">;</span><span class="s1"> 
+        t1_h.setText(</span><span class="s6">&quot;Job&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        t1_h.setGravity(View.TEXT_ALIGNMENT_CENTER)</span><span class="s0">;</span><span class="s1"> 
+        t1_h.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+        t1_h.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">50</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.MATCH_PARENT))</span><span class="s0">;</span><span class="s1"> 
+        t1_h.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+        t1_h.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+        t1_h.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+        TextView t2_h = </span><span class="s0">new </span><span class="s1">TextView(getContext())</span><span class="s0">;</span><span class="s1"> 
+        t2_h.setText(</span><span class="s6">&quot;Started&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        t2_h.setGravity(View.TEXT_ALIGNMENT_CENTER)</span><span class="s0">;</span><span class="s1"> 
+        t2_h.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+        t2_h.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+        t2_h.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">75</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+        t2_h.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+        t2_h.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+        TextView t3_h = </span><span class="s0">new </span><span class="s1">TextView(getContext())</span><span class="s0">;</span><span class="s1"> 
+        t3_h.setText(</span><span class="s6">&quot;Finished&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        t3_h.setGravity(View.TEXT_ALIGNMENT_CENTER)</span><span class="s0">;</span><span class="s1"> 
+        t3_h.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+        t3_h.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+        t3_h.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">75</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+        t3_h.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+        t3_h.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+        TextView t5_h = </span><span class="s0">new </span><span class="s1">TextView(getContext())</span><span class="s0">;</span><span class="s1"> 
+        t5_h.setText(</span><span class="s6">&quot;Wait&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        t5_h.setGravity(View.TEXT_ALIGNMENT_CENTER)</span><span class="s0">;</span><span class="s1"> 
+        t5_h.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+        t5_h.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+        t5_h.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">75</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+        t5_h.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+        t5_h.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+        TextView t4_h = </span><span class="s0">new </span><span class="s1">TextView(getContext())</span><span class="s0">;</span><span class="s1"> 
+        t4_h.setText(</span><span class="s6">&quot;MAWJWA&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        t4_h.setGravity(View.TEXT_ALIGNMENT_CENTER)</span><span class="s0">;</span><span class="s1"> 
+        t4_h.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+        t4_h.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+        t4_h.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">100</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+        t4_h.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+        t4_h.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+        row_h.addView(t1_h)</span><span class="s0">;</span><span class="s1"> 
+        row_h.addView(t2_h)</span><span class="s0">;</span><span class="s1"> 
+        row_h.addView(t3_h)</span><span class="s0">;</span><span class="s1"> 
+        row_h.addView(t5_h)</span><span class="s0">;</span><span class="s1"> 
+        row_h.addView(t4_h)</span><span class="s0">;</span><span class="s1"> 
+ 
+        table.addView(row_h</span><span class="s0">, new </span><span class="s1">TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT</span><span class="s0">, </span><span class="s1">TableLayout.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(<a href="Job.java.html">Job</a> j: jobList){ 
+            TableRow row = </span><span class="s0">new </span><span class="s1">TableRow(getContext())</span><span class="s0">;</span><span class="s1"> 
+ 
+            TextView t1 = </span><span class="s0">new </span><span class="s1">TextView(getContext())</span><span class="s0">;</span><span class="s1"> 
+            t1.setText(String.valueOf(j.getJobNo()))</span><span class="s0">;</span><span class="s1"> 
+            t1.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+            t1.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">50</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.MATCH_PARENT))</span><span class="s0">;</span><span class="s1"> 
+            t1.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+            t1.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+            t1.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+            TextView t2 = </span><span class="s0">new </span><span class="s1">TextView(getContext())</span><span class="s0">;</span><span class="s1"> 
+            t2.setText(String.valueOf(j.getTimeStarted()))</span><span class="s0">;</span><span class="s1"> 
+            t2.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+            t2.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+            t2.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">75</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+            t2.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+            t2.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+            TextView t3 = </span><span class="s0">new </span><span class="s1">TextView(getContext())</span><span class="s0">;</span><span class="s1"> 
+            t3.setText(String.valueOf(j.getTimeFinished()))</span><span class="s0">;</span><span class="s1"> 
+            t3.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+            t3.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+            t3.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">75</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+            t3.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+            t3.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+            TextView t5 = </span><span class="s0">new </span><span class="s1">TextView(getContext())</span><span class="s0">;</span><span class="s1"> 
+            t5.setText(String.valueOf(j.getWaitingTime()))</span><span class="s0">;</span><span class="s1"> 
+            t5.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+            t5.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+            t5.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">75</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+            t5.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+            t5.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+            TextView t4 = </span><span class="s0">new </span><span class="s1">TextView(getContext())</span><span class="s0">;</span><span class="s1"> 
+            t4.setText(String.valueOf(j.getWhenAllocated()))</span><span class="s0">;</span><span class="s1"> 
+            t4.setTextAppearance(getContext()</span><span class="s0">, </span><span class="s1">android.R.style.TextAppearance_Material_Body1)</span><span class="s0">;</span><span class="s1"> 
+            t4.setBackgroundResource(R.drawable.border)</span><span class="s0">;</span><span class="s1"> 
+            t4.setLayoutParams(</span><span class="s0">new </span><span class="s1">TableRow.LayoutParams(spToPx(</span><span class="s5">100</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">, </span><span class="s1">TableRow.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+            t4.setGravity(Gravity.CENTER)</span><span class="s0">;</span><span class="s1"> 
+            t4.setPadding(spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext())</span><span class="s0">,</span><span class="s1"> 
+                    spToPx(</span><span class="s5">8</span><span class="s0">, </span><span class="s1">getContext()))</span><span class="s0">;</span><span class="s1"> 
+ 
+            row.addView(t1)</span><span class="s0">;</span><span class="s1"> 
+            row.addView(t2)</span><span class="s0">;</span><span class="s1"> 
+            row.addView(t3)</span><span class="s0">;</span><span class="s1"> 
+            row.addView(t5)</span><span class="s0">;</span><span class="s1"> 
+            row.addView(t4)</span><span class="s0">;</span><span class="s1"> 
+ 
+            table.addView(row</span><span class="s0">, new </span><span class="s1">TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT</span><span class="s0">, </span><span class="s1">TableLayout.LayoutParams.WRAP_CONTENT))</span><span class="s0">;</span><span class="s1"> 
+        } 
+        table.setVisibility(TableLayout.VISIBLE)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+} 
+ 
+</span></pre>
+</body>
+</html>
