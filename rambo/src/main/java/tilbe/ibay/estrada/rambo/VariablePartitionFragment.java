@@ -227,7 +227,16 @@ public class VariablePartitionFragment extends Fragment {
     }
 
     boolean checkInputValidity(){
-        return !(tableRowStack.isEmpty() || memoryEt.getText().toString().isEmpty());
+        if (tableRowStack.isEmpty() || memoryEt.getText().toString().isEmpty())
+            return false;
+
+        for (int i = 0; i < tableRowStack.size(); i++) {
+            if (et_memoryList.get(i).getText().toString().isEmpty() ||
+                    et_arrivalTimeList.get(i).getText().toString().isEmpty() ||
+                    et_runTimeList.get(i).getText().toString().isEmpty())
+                return false;
+        }
+        return true;
     }
 
     int getNumberJobsDone(ArrayList<Job> jobs){

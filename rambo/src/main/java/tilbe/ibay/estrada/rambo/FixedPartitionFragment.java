@@ -178,6 +178,11 @@ public class FixedPartitionFragment extends Fragment {
         boolean emptyPartition = editTextList.isEmpty();
         boolean emptyJobQueue = job.isEmpty();
 
+        for (int i = 0; i < editTextList.size(); i++) {
+            if(editTextList.get(i).getText().toString().isEmpty())
+                return false;
+        }
+
         if(emptyJobQueue || emptyPartition) {
             return false;
         } else {
@@ -274,11 +279,14 @@ public class FixedPartitionFragment extends Fragment {
         System.out.println();
 
         System.out.println("Allocation");
+        String allocationPrint = "Allocation: ";
         for (int j = 0; j < n; j++) {
             if (allocation[j] == 0) {
                 System.out.print("x ");
+                allocationPrint += "x ";
             } else {
                 System.out.print(allocation[j] + " ");
+                allocationPrint += String.valueOf(allocation[j]) + " ";
             }
         }
         System.out.println();
@@ -287,7 +295,8 @@ public class FixedPartitionFragment extends Fragment {
         System.out.println("External fragmentation: " + exFrag);
         System.out.println("Memory Utilization: " + df.format(memUtil) + "%");
 
-        result = "Internal fragmentation: " + inFrag;
+        result = allocationPrint;
+        result += "\n\n" +"Internal fragmentation: " + inFrag;
         result += "\n" + "External fragmentation: " + exFrag;
         result += "\n" + "Memory Utilization: " + df.format(memUtil) + "%";
 
